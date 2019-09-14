@@ -37,19 +37,13 @@ var blocks = {
 };
 
 loadTable();
-setInterval(function() {
+var tetris = setInterval(function() {
   // Counting order, count up in step 1
   count++;
   document.getElementById("hello_text").textContent =
     "初めてのJavaScript(" + count + ")";
-  // ここおかしい
-  //   for (var row = 0; row < 2; row++) {
-  //     for (var col = 0; col < 10; col++) {
-  //       if (cells[row][col].className !== "") {
-  //         alert("game over");
-  //       }
-  //     }
-  //   }
+  //
+  // checkGameOver();
   if (hasFallingBlock()) {
     fallBlocks();
   } else {
@@ -106,6 +100,19 @@ function fallBlocks() {
   }
 }
 
+function checkGameOver() {
+  for (var col = 3; col < 7; col++) {
+    if (
+      cells[0][col].className !== "" &&
+      cells[1][col].className !== "" &&
+      cells[2][col].className !== ""
+    ) {
+      clearInterval(tetris);
+      alert("game over");
+    }
+  }
+}
+
 var isFalling = false;
 function hasFallingBlock() {
   return isFalling;
@@ -143,6 +150,23 @@ function generateBlock() {
   var keys = Object.keys(blocks);
   var nextBlockKey = keys[Math.floor(Math.random() * keys.length)];
   var nextBlock = blocks[nextBlockKey];
+  if (nextBlock.className !== "i") {
+    if (nextBlock.className === "o") {
+      for (var col = 3; col < 5; col++) {
+        if (cells[1][col].className !== "" || cells[0][col].className !== "") {
+          clearInterval(tetris);
+          alert("game over");
+        }
+      }
+    } else {
+      for (var col = 3; col < 6; col++) {
+        if (cells[1][col].className !== "" || cells[0][col].className !== "") {
+          clearInterval(tetris);
+          alert("game over");
+        }
+      }
+    }
+  }
   var nextFallingBlockNum = fallingBlockNum + 1;
   // 2. 選んだパターンをもとにブロックを配置する
   var pattern = nextBlock.pattern;
