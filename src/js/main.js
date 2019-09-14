@@ -42,7 +42,6 @@ var tetris = setInterval(function() {
   count++;
   document.getElementById("hello_text").textContent =
     "初めてのJavaScript(" + count + ")";
-  //
   // checkGameOver();
   if (hasFallingBlock()) {
     fallBlocks();
@@ -130,7 +129,7 @@ function deleteRow() {
       for (var col = 0; col < 10; col++) {
         cells[row][col].className = "";
       }
-      // ここもロジックとしておかしい気がする
+      // ここのロジック??
       for (var downRow = row - 1; row >= 0; row--) {
         for (var col = 0; col < 10; col++) {
           cells[downRow + 1][col].className = cells[downRow][col].className;
